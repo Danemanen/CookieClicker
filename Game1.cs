@@ -27,8 +27,14 @@ namespace CookieClicker
         bool mReleased = true;
         int Cookies = 0;
         int Click = 1;
-        int hej = 1;
+        int GrandmaPerSec = 0;
+        int CursorPerSec = 0;
+        int FarmPerSec = 0;
+        int MinePerSec = 0;
+        int FactoryPerSec = 0;
+        int BankPerSec = 0;
 
+        int secTimer = 0;
 
 
 
@@ -88,17 +94,29 @@ namespace CookieClicker
         {
             if (Cookies >= 5)
             {
-                Click *= 2;
+                Cookies -= 5;
+                GrandmaPerSec += 5;
             }
         }
 
         private void CursorButton_click(object sender, System.EventArgs e)
         {
-            Cookies += Click;
+            if (Cookies >= 1)
+            {
+                Cookies -= 1;
+                CursorPerSec += 1;
+            }
         }
 
         protected override void Update(GameTime gameTime)
         {
+            secTimer += 1;
+            if (secTimer == 60)
+            {
+                Cookies += GrandmaPerSec;
+                Cookies += CursorPerSec;
+                secTimer = 0;
+            }
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
