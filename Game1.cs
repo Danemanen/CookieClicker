@@ -27,7 +27,7 @@ namespace CookieClicker
         bool mReleased = true;
         int Cookies = 0;
         int Click = 1;
-
+        int t = 0;
 
 
 
