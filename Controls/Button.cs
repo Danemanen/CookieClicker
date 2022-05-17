@@ -38,6 +38,8 @@ namespace CookieClicker.Controls
 
         public string Text { get; set; }
 
+        public string Price { get; set; }
+
         public Button(Texture2D texture, SpriteFont font) 
         {
             _texture = texture;
@@ -62,6 +64,14 @@ namespace CookieClicker.Controls
                 var y = (Rectangle.Y + (Rectangle.Height / 2)) - (_font.MeasureString(Text).Y / 2);
 
                 spriteBatch.DrawString(_font, Text, new Vector2(x, y), PenColour);
+            }
+
+            if (!string.IsNullOrEmpty(Price))
+            {
+                var x = (Rectangle.X + (Rectangle.Width - 350)) - (_font.MeasureString(Text).X / 2);
+                var y = (Rectangle.Y + (Rectangle.Height / 2)) - (_font.MeasureString(Text).Y / 2);
+
+                spriteBatch.DrawString(_font, Price, new Vector2(x + 200, y + 10), PenColour);
             }
         
         }
