@@ -61,7 +61,7 @@ namespace CookieClicker
         int factoryClickerUpgradeCost = 200000;
         int bankClickerUpgradeCost = 1500000;
 
-        decimal NextPrice = 1.2m;
+        decimal NextPrice = 1.15m;
 
         public Game1()
         {
@@ -84,97 +84,139 @@ namespace CookieClicker
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            var cursorButton = new Button(Content.Load<Texture2D>("Controls/Button"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            var cursorButton = new Button(this, Content.Load<Texture2D>("Controls/Button"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
                 Position = new Vector2(1115, 390),
-                Text = "Cursor    ",
+                Text = "  Cursor    ",
                 Price = "Price:" + CursorCost,
             };
             
             cursorButton.click += CursorButton_click;
 
-            var grandmaButton = new Button(Content.Load<Texture2D>("Controls/Button"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            var grandmaButton = new Button(this, Content.Load<Texture2D>("Controls/Button"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
                 Position = new Vector2(1115, 475),
-                Text = "Grandma",
+                Text = "  Grandma",
                 Price = "Price:" + GrandmaCost,
             };
 
             grandmaButton.click += GrandmaButton_click;
 
-            var farmButton = new Button(Content.Load<Texture2D>("Controls/Button"), Content.Load<SpriteFont>("Fonts/galleryFont"))
-            {
-                Position = new Vector2(1115, 560),
-                Text = "Farm      ",
-                Price = "Price:" + FarmCost,
-            };
-
+            //var farmButton = new Button(Content.Load<Texture2D>("Controls/Button"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            //{
+            //    Position = new Vector2(1115, 560),
+            //    Text = "  Farm      ",
+            //    Price = "Price:" + FarmCost,
+            //};
+            var farmButton = new Button(this, new Vector2(1115, 560), "  Farm      ", FarmCost);
             farmButton.click += FarmButton_click;
 
-            var mineButton = new Button(Content.Load<Texture2D>("Controls/Button"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            var mineButton = new Button(this,Content.Load<Texture2D>("Controls/Button"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
                 Position = new Vector2(1115, 645),
-                Text = "Mine       ",
+                Text = "  Mine       ",
                 Price = "Price:" + MineCost,
             };
 
             mineButton.click += MineButton_click;
 
-            var factoryButton = new Button(Content.Load<Texture2D>("Controls/Button"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            var factoryButton = new Button(this,Content.Load<Texture2D>("Controls/Button"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
                 Position = new Vector2(1115, 730),
-                Text = "Factory  ",
+                Text = "  Factory  ",
                 Price = "Price:" + FactoryCost,
             };
 
             factoryButton.click += FactoryButton_click;
 
-            var bankButton = new Button(Content.Load<Texture2D>("Controls/Button"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            var bankButton = new Button(this, Content.Load<Texture2D>("Controls/Button"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
                 Position = new Vector2(1115, 815),
-                Text = "Bank      ",
+                Text = "  Bank      ",
                 Price = "Price:" + BankCost,
             };
 
-            var mouseclickerButton = new Button(Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            var mouseclickerButton = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
                 Position = new Vector2(1115, 80),
              
             };
 
-            var cursorclickerButton = new Button(Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            var cursorclickerButton = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
                 Position = new Vector2(1195, 80),
 
             };
 
-            var grandmaclickerButton = new Button(Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            var grandmaclickerButton = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
                 Position = new Vector2(1275, 80),
 
             };
 
-            var farmclickerButton = new Button(Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            var farmclickerButton = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
                 Position = new Vector2(1355, 80),
 
             };
 
-            var mineclickerButton = new Button(Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            var mineclickerButton = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
                 Position = new Vector2(1435, 80),
 
             };
 
-            var factoryclickerButton = new Button(Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            var factoryclickerButton = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
                 Position = new Vector2(1515, 80),
 
             };
 
-            var bankclickerButton = new Button(Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            var bankclickerButton = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
-                Position = new Vector2(1115, 200),
+                Position = new Vector2(1115, 182),
+
+            };
+
+            var mouseclickerButton2 = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            {
+                Position = new Vector2(1195, 182),
+
+            };
+
+            var cursorclickerButton2 = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            {
+                Position = new Vector2(1275, 182),
+
+            };
+
+            var grandmaclickerButton2 = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            {
+                Position = new Vector2(1355, 182),
+
+            };
+
+            var farmclickerButton2 = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            {
+                Position = new Vector2(1435, 182),
+
+            };
+
+            var mineclickerButton2 = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            {
+                Position = new Vector2(1515, 182),
+
+            };
+
+            var factoryclickerButton2 = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            {
+                Position = new Vector2(1115, 282),
+
+            };
+
+            var bankclickerButton2 = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            {
+                Position = new Vector2(1195, 282),
 
             };
 
@@ -191,6 +233,13 @@ namespace CookieClicker
                mineclickerButton,
                factoryclickerButton,
                bankclickerButton,
+               mouseclickerButton2,
+               cursorclickerButton2,
+               grandmaclickerButton2,
+               farmclickerButton2,
+               mineclickerButton2,
+               factoryclickerButton2,
+               bankclickerButton2,
                cursorButton,
                grandmaButton,
                farmButton,
@@ -204,6 +253,11 @@ namespace CookieClicker
             BackgroundSprite = Content.Load<Texture2D>("Background");
             MouseClickerSprite = Content.Load<Texture2D>("mouseclicker");
             CursorClickerSprite = Content.Load<Texture2D>("cursorclicker");
+            GrandmaClickerSprite = Content.Load<Texture2D>("grandmaclicker");
+            FarmClickerSprite = Content.Load<Texture2D>("farmclicker");
+            MineClickerSprite = Content.Load<Texture2D>("mineclicker");
+            FactoryClickerSprite = Content.Load<Texture2D>("fatoryclicker");
+            BankClickerSprite = Content.Load<Texture2D>("bankclicker");
             gameFont = Content.Load<SpriteFont>("Fonts/galleryFont");
             gameFontSmall = Content.Load<SpriteFont>("Fonts/galleryFontSmall");
 
@@ -217,6 +271,7 @@ namespace CookieClicker
                 Cookies -= (int)BankCost;
                 BankPerSec += 12000;
                 BankCost *= NextPrice;
+                ((Button)sender).Price = "Price: " + BankCost;
             }
         }
 
@@ -227,6 +282,7 @@ namespace CookieClicker
                 Cookies -= (int)FactoryCost;
                 FactoryPerSec += 1000;
                 FactoryCost *= NextPrice;
+                ((Button)sender).Price = "Price: " + FactoryCost;
             }
         }
 
@@ -237,6 +293,7 @@ namespace CookieClicker
                 Cookies -= (int)MineCost;
                 MinePerSec += 125;
                 MineCost *= NextPrice;
+                ((Button)sender).Price = "Price: " + MineCost;
             }
         }
 
@@ -247,6 +304,7 @@ namespace CookieClicker
                 Cookies -= (int)FarmCost;
                 FarmPerSec += 40;
                 FarmCost *= NextPrice;
+                ((Button)sender).Price = "Price: " + FarmCost;
             }
         }
 
@@ -254,9 +312,11 @@ namespace CookieClicker
         {
             if (Cookies >= GrandmaCost)
             {
+                
                 Cookies -= (int)GrandmaCost;
                 GrandmaPerSec += 5;
-                GrandmaCost *= NextPrice;
+                GrandmaCost = GrandmaCost *= NextPrice;
+                ((Button)sender).Price = "Price: " + GrandmaCost;
             }
         }
 
@@ -268,7 +328,7 @@ namespace CookieClicker
                 CursorPerSec += 1;
                 
                 CursorCost *= NextPrice;
-               
+                ((Button)sender).Price = "Price: " + CursorCost;
             }
         }
 
@@ -321,11 +381,32 @@ namespace CookieClicker
             _spriteBatch.DrawString(gameFont, "Cookies:" + " " + Cookies.ToString(), new Vector2(50, 50), Color.White);
             _spriteBatch.Draw(CookieSprite, new Vector2(Cookieposition.X - CookieRadius, Cookieposition.Y - CookieRadius), Color.White); 
             _spriteBatch.Draw(StoreSprite, new Vector2(1110, 0), Color.White);
-            _spriteBatch.Draw(MouseClickerSprite, new Vector2(1110, 0), Color.White);
+
             _spriteBatch.DrawString(gameFontSmall, " " + mouseClickerUpgradeCost, new Vector2(1130, 160), Color.White);
+            _spriteBatch.DrawString(gameFontSmall, " " + cursorClickerUpgradeCost, new Vector2(1210, 160), Color.White);
+            _spriteBatch.DrawString(gameFontSmall, " " + grandmaClickerUpgradeCost, new Vector2(1282, 160), Color.White);
+            _spriteBatch.DrawString(gameFontSmall, " " + farmClickerUpgradeCost, new Vector2(1365, 160), Color.White);
+            _spriteBatch.DrawString(gameFontSmall, " " + mineClickerUpgradeCost, new Vector2(1437, 160), Color.White);
+            _spriteBatch.DrawString(gameFontSmall, " " + factoryClickerUpgradeCost, new Vector2(1515, 160), Color.White);
             foreach (var component in _gameComponents)
                 component.Draw(gameTime, _spriteBatch);
-                _spriteBatch.End();
+
+            
+            _spriteBatch.Draw(MouseClickerSprite, new Vector2(1105, 68), Color.White);
+            _spriteBatch.Draw(CursorClickerSprite, new Vector2(1182, 68), Color.White);
+            _spriteBatch.Draw(GrandmaClickerSprite, new Vector2(1266, 49), Color.White);
+            _spriteBatch.Draw(FarmClickerSprite, new Vector2(1343, 68), Color.White);
+            _spriteBatch.Draw(MineClickerSprite, new Vector2(1422, 68), Color.White);
+            _spriteBatch.Draw(FactoryClickerSprite, new Vector2(1502, 68), Color.White);
+            _spriteBatch.Draw(BankClickerSprite, new Vector2(1103, 167), Color.White);
+
+            _spriteBatch.Draw(CursorClickerSprite, new Vector2(1100, 378), Color.White);
+            _spriteBatch.Draw(GrandmaClickerSprite, new Vector2(1110, 444), Color.White);
+            _spriteBatch.Draw(FarmClickerSprite, new Vector2(1105, 550), Color.White);
+            _spriteBatch.Draw(MineClickerSprite, new Vector2(1105, 632), Color.White);
+            _spriteBatch.Draw(FactoryClickerSprite, new Vector2(1105, 718), Color.White);
+            _spriteBatch.Draw(BankClickerSprite, new Vector2(1105, 802), Color.White);
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }

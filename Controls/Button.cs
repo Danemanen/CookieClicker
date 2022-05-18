@@ -14,6 +14,8 @@ namespace CookieClicker.Controls
 
         private SpriteFont _font;
 
+        private SpriteFont _fontSmall;
+
         private bool _isHovering;
 
         private MouseState _previousMouse;
@@ -40,13 +42,22 @@ namespace CookieClicker.Controls
 
         public string Price { get; set; }
 
-        public Button(Texture2D texture, SpriteFont font) 
+        public Button(Game game, Texture2D texture, SpriteFont font) 
         {
             _texture = texture;
 
             _font = font;
-
+            _fontSmall = game.Content.Load<SpriteFont>("Fonts/galleryFontSmall");
             PenColour = Color.Black;
+        }
+        public Button(Game game, Vector2 position, string text, decimal price)
+        {
+            _texture = game.Content.Load<Texture2D>("Controls/Button");
+            _font = game.Content.Load<SpriteFont>("Fonts/galleryFont");
+            _fontSmall = game.Content.Load<SpriteFont>("Fonts/galleryFontSmall");
+            Text = text;
+            Position = position;
+            Price="Price: "+price;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -71,7 +82,7 @@ namespace CookieClicker.Controls
                 var x = (Rectangle.X + (Rectangle.Width - 350)) - (_font.MeasureString(Text).X / 2);
                 var y = (Rectangle.Y + (Rectangle.Height / 2)) - (_font.MeasureString(Text).Y / 2);
 
-                spriteBatch.DrawString(_font, Price, new Vector2(x + 200, y + 10), PenColour);
+                spriteBatch.DrawString(_fontSmall, Price, new Vector2(x + 200, y + 10), PenColour);
             }
         
         }
