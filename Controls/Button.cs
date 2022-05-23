@@ -21,6 +21,8 @@ namespace CookieClicker.Controls
         private MouseState _previousMouse;
 
         private Texture2D _texture;
+        private Texture2D texture2D;
+        private SpriteFont spriteFont;
 
         public event EventHandler click;
 
@@ -50,14 +52,21 @@ namespace CookieClicker.Controls
             _fontSmall = game.Content.Load<SpriteFont>("Fonts/galleryFontSmall");
             PenColour = Color.Black;
         }
-        public Button(Game game, Vector2 position, string text, decimal price)
+
+        //public Button(Game game, Vector2 position, string text, decimal price)
+        //{
+        //    _texture = game.Content.Load<Texture2D>("Controls/Button");
+        //    _font = game.Content.Load<SpriteFont>("Fonts/galleryFont");
+        //    _fontSmall = game.Content.Load<SpriteFont>("Fonts/galleryFontSmall");
+        //    Text = text;
+        //    Position = position;
+        //    Price="Price: "+price;
+        //}
+
+        public Button(Texture2D texture2D, SpriteFont spriteFont)
         {
-            _texture = game.Content.Load<Texture2D>("Controls/Button");
-            _font = game.Content.Load<SpriteFont>("Fonts/galleryFont");
-            _fontSmall = game.Content.Load<SpriteFont>("Fonts/galleryFontSmall");
-            Text = text;
-            Position = position;
-            Price="Price: "+price;
+            this.texture2D = texture2D;
+            this.spriteFont = spriteFont;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -79,7 +88,7 @@ namespace CookieClicker.Controls
 
             if (!string.IsNullOrEmpty(Price))
             {
-                var x = (Rectangle.X + (Rectangle.Width - 350)) - (_font.MeasureString(Text).X / 2);
+                var x = (Rectangle.X + (Rectangle.Width - 270)) - (_font.MeasureString(Text).X / 2);
                 var y = (Rectangle.Y + (Rectangle.Height / 2)) - (_font.MeasureString(Text).Y / 2);
 
                 spriteBatch.DrawString(_fontSmall, Price, new Vector2(x + 200, y + 10), PenColour);

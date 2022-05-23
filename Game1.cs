@@ -34,8 +34,13 @@ namespace CookieClicker
         bool mReleased = true;
 
         int Cookies = 10000;
+        int RebirthCookies = 0;
 
         int Click = 1;
+
+        int secTimer = 0;
+
+        decimal NextPrice = 1.15m;
 
         int CursorPerSec = 0;
         int GrandmaPerSec = 0;
@@ -51,7 +56,19 @@ namespace CookieClicker
         decimal FactoryCost = 100000;
         decimal BankCost = 850000;
 
-        int secTimer = 0;
+        int CursorAntal = 0;
+        int GrandmaAntal = 0;
+        int FarmAntal = 0;
+        int MineAntal = 0;
+        int FactoryAntal = 0;
+        int BankAntal = 0;
+
+        int CursorCps = 1;
+        int GrandmaCps = 5;
+        int FarmCps = 40;
+        int MineCps = 125;
+        int FactoryCps = 1000;
+        int BankCps = 12000;
 
         int mouseClickerUpgradeCost = 500;
         int cursorClickerUpgradeCost = 750;
@@ -61,7 +78,13 @@ namespace CookieClicker
         int factoryClickerUpgradeCost = 200000;
         int bankClickerUpgradeCost = 1500000;
 
-        decimal NextPrice = 1.15m;
+        int CursorUpgrade = 1;
+        int GrandmaUpgrade = 1;
+        int FarmUpgrade = 1;
+        int MineUpgrade = 1;
+        int FactoryUpgrade = 1;
+        int BankUpgrade = 1;
+
 
         public Game1()
         {
@@ -102,16 +125,16 @@ namespace CookieClicker
 
             grandmaButton.click += GrandmaButton_click;
 
-            //var farmButton = new Button(Content.Load<Texture2D>("Controls/Button"), Content.Load<SpriteFont>("Fonts/galleryFont"))
-            //{
-            //    Position = new Vector2(1115, 560),
-            //    Text = "  Farm      ",
-            //    Price = "Price:" + FarmCost,
-            //};
-            var farmButton = new Button(this, new Vector2(1115, 560), "  Farm      ", FarmCost);
-            farmButton.click += FarmButton_click;
+           var farmButton = new Button(this, Content.Load<Texture2D>("Controls/Button"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            {
+                Position = new Vector2(1115, 560),
+                Text = "  Farm      ",
+                Price = "Price:" + FarmCost,
+            };
 
-            var mineButton = new Button(this,Content.Load<Texture2D>("Controls/Button"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            farmButton.click += FarmButton_click1;
+
+            var mineButton = new Button(this, Content.Load<Texture2D>("Controls/Button"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
                 Position = new Vector2(1115, 645),
                 Text = "  Mine       ",
@@ -120,7 +143,7 @@ namespace CookieClicker
 
             mineButton.click += MineButton_click;
 
-            var factoryButton = new Button(this,Content.Load<Texture2D>("Controls/Button"), Content.Load<SpriteFont>("Fonts/galleryFont"))
+            var factoryButton = new Button(this, Content.Load<Texture2D>("Controls/Button"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
                 Position = new Vector2(1115, 730),
                 Text = "  Factory  ",
@@ -136,11 +159,15 @@ namespace CookieClicker
                 Price = "Price:" + BankCost,
             };
 
+            bankButton.click += BankButton_click;
+            
             var mouseclickerButton = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
                 Position = new Vector2(1115, 80),
              
             };
+
+            mouseclickerButton.click += MouseclickerButton_click;
 
             var cursorclickerButton = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
@@ -148,11 +175,15 @@ namespace CookieClicker
 
             };
 
+            cursorclickerButton.click += CursorclickerButton_click;
+
             var grandmaclickerButton = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
                 Position = new Vector2(1275, 80),
 
             };
+
+            grandmaclickerButton.click += GrandmaclickerButton_click;
 
             var farmclickerButton = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
@@ -160,11 +191,15 @@ namespace CookieClicker
 
             };
 
+            farmclickerButton.click += FarmclickerButton_click;
+
             var mineclickerButton = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
                 Position = new Vector2(1435, 80),
 
             };
+
+            mineclickerButton.click += MineclickerButton_click;
 
             var factoryclickerButton = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
@@ -172,11 +207,15 @@ namespace CookieClicker
 
             };
 
+            factoryclickerButton.click += FactoryclickerButton_click;
+
             var bankclickerButton = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
                 Position = new Vector2(1115, 182),
 
             };
+
+            bankclickerButton.click += BankclickerButton_click;
 
             var mouseclickerButton2 = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
@@ -184,11 +223,15 @@ namespace CookieClicker
 
             };
 
+            mouseclickerButton2.click += MouseclickerButton2_click;
+
             var cursorclickerButton2 = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
                 Position = new Vector2(1275, 182),
 
             };
+
+            cursorclickerButton2.click += CursorclickerButton2_click;
 
             var grandmaclickerButton2 = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
@@ -196,11 +239,15 @@ namespace CookieClicker
 
             };
 
+            grandmaclickerButton2.click += GrandmaclickerButton2_click;
+
             var farmclickerButton2 = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
                 Position = new Vector2(1435, 182),
 
             };
+
+            farmclickerButton2.click += FarmclickerButton2_click;
 
             var mineclickerButton2 = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
@@ -208,11 +255,15 @@ namespace CookieClicker
 
             };
 
+            mineclickerButton2.click += MineclickerButton2_click;
+
             var factoryclickerButton2 = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
                 Position = new Vector2(1115, 282),
 
             };
+
+            factoryclickerButton2.click += FactoryclickerButton2_click;
 
             var bankclickerButton2 = new Button(this, Content.Load<Texture2D>("Controls/Button3"), Content.Load<SpriteFont>("Fonts/galleryFont"))
             {
@@ -220,9 +271,19 @@ namespace CookieClicker
 
             };
 
+            bankclickerButton2.click += BankclickerButton2_click;
 
+            var Page1 = new Button(this, Content.Load<Texture2D>("Controls/Button4"), Content.Load<SpriteFont>("Fonts/galleryFontSmall"))
+            {
+                Position = new Vector2(900, 800),
+                Text = "                                                                                     Page 1",
+            };
 
-            bankButton.click += BankButton_click;
+            var Page2 = new Button(this, Content.Load<Texture2D>("Controls/Button4"), Content.Load<SpriteFont>("Fonts/galleryFontSmall"))
+            {
+                Position = new Vector2(900, 850),
+                Text = "                                                                                     Page 2",
+            };
 
             _gameComponents = new List<MyComponent>()
             {
@@ -233,6 +294,7 @@ namespace CookieClicker
                mineclickerButton,
                factoryclickerButton,
                bankclickerButton,
+
                mouseclickerButton2,
                cursorclickerButton2,
                grandmaclickerButton2,
@@ -240,12 +302,16 @@ namespace CookieClicker
                mineclickerButton2,
                factoryclickerButton2,
                bankclickerButton2,
+
                cursorButton,
                grandmaButton,
                farmButton,
                mineButton,
                factoryButton,
                bankButton,
+
+               Page1,
+               Page2,
             };
 
             StoreSprite = Content.Load<Texture2D>("Store");
@@ -264,6 +330,148 @@ namespace CookieClicker
 
         }
 
+
+
+        private void BankclickerButton2_click(object sender, System.EventArgs e)
+        {
+            if (Cookies >= bankClickerUpgradeCost * 5)
+            {
+                BankUpgrade *= 2;
+                Cookies -= bankClickerUpgradeCost * 5;
+                BankCps *= 2;
+            }
+        }
+
+        private void FactoryclickerButton2_click(object sender, System.EventArgs e)
+        {
+            if (Cookies >= factoryClickerUpgradeCost * 5)
+            {
+                FactoryUpgrade *= 2;
+                Cookies -= factoryClickerUpgradeCost * 5;
+                FactoryCps *= 2;
+            }
+        }
+
+        private void MineclickerButton2_click(object sender, System.EventArgs e)
+        {
+            if (Cookies >= mineClickerUpgradeCost * 5)
+            {
+                MineUpgrade *= 2;
+                Cookies -= mineClickerUpgradeCost * 5;
+                MineCps *= 2;
+            }
+        }
+
+        private void FarmclickerButton2_click(object sender, System.EventArgs e)
+        {
+            if (Cookies >= farmClickerUpgradeCost * 5)
+            {
+                FarmUpgrade *= 2;
+                Cookies -= farmClickerUpgradeCost * 5;
+                FarmCps *= 2;
+            }
+        }
+
+        private void GrandmaclickerButton2_click(object sender, System.EventArgs e)
+        {
+            if (Cookies >= grandmaClickerUpgradeCost * 5)
+            {
+                GrandmaUpgrade *= 2;
+                Cookies -= grandmaClickerUpgradeCost * 5;
+                GrandmaCps *= 2;
+            }
+        }
+
+        private void CursorclickerButton2_click(object sender, System.EventArgs e)
+        {
+            if (Cookies >= cursorClickerUpgradeCost * 5)
+            {
+                CursorUpgrade *= 2;
+                Cookies -= cursorClickerUpgradeCost * 5;
+                CursorCps *= 2;
+            }
+        }
+
+        private void MouseclickerButton2_click(object sender, System.EventArgs e)
+        {
+            if (Cookies >= mouseClickerUpgradeCost * 5)
+            {
+                Click *= 2;
+                Cookies -= mouseClickerUpgradeCost * 5;
+
+            }
+        }
+
+        private void BankclickerButton_click(object sender, System.EventArgs e)
+        {
+            if (Cookies >= bankClickerUpgradeCost)
+            {
+                BankUpgrade *= 2;
+                Cookies -= bankClickerUpgradeCost;
+                BankCps *= 2;
+            }
+        }
+
+        private void FactoryclickerButton_click(object sender, System.EventArgs e)
+        {
+            if (Cookies >= factoryClickerUpgradeCost)
+            {
+                FactoryUpgrade *= 2;
+                Cookies -= factoryClickerUpgradeCost;
+                FactoryCps *= 2;
+            }
+        }
+
+        private void MineclickerButton_click(object sender, System.EventArgs e)
+        {
+            if (Cookies >= mineClickerUpgradeCost)
+            {
+                MineUpgrade *= 2;
+                Cookies -= mineClickerUpgradeCost;
+                MineCps *= 2;
+            }
+        }
+
+        private void FarmclickerButton_click(object sender, System.EventArgs e)
+        {
+            if (Cookies >= farmClickerUpgradeCost)
+            {
+                FarmUpgrade *= 2;
+                Cookies -= farmClickerUpgradeCost;
+                FarmCps *= 2;
+            }
+        }
+
+        private void GrandmaclickerButton_click(object sender, System.EventArgs e)
+        {
+            if (Cookies >= grandmaClickerUpgradeCost)
+            {
+                GrandmaUpgrade *= 2;
+                Cookies -= grandmaClickerUpgradeCost;
+                GrandmaCps *= 2;
+            }
+        }
+
+        private void CursorclickerButton_click(object sender, System.EventArgs e)
+        {
+            if (Cookies >= cursorClickerUpgradeCost)
+            {
+                CursorUpgrade *= 2;
+                Cookies -= cursorClickerUpgradeCost;
+                CursorCps *= 2;
+            }
+        }
+
+        private void MouseclickerButton_click(object sender, System.EventArgs e)
+        {
+            if (Cookies >= mouseClickerUpgradeCost)
+            {
+                Click *= 2;
+                Cookies -= mouseClickerUpgradeCost;
+                
+            }
+        }
+
         private void BankButton_click(object sender, System.EventArgs e)
         {
             if (Cookies >= BankCost)
@@ -271,7 +479,8 @@ namespace CookieClicker
                 Cookies -= (int)BankCost;
                 BankPerSec += 12000;
                 BankCost *= NextPrice;
-                ((Button)sender).Price = "Price: " + BankCost;
+                ((Button)sender).Price = "Price: " + (int)BankCost;
+                BankAntal += 1;
             }
         }
 
@@ -282,7 +491,8 @@ namespace CookieClicker
                 Cookies -= (int)FactoryCost;
                 FactoryPerSec += 1000;
                 FactoryCost *= NextPrice;
-                ((Button)sender).Price = "Price: " + FactoryCost;
+                ((Button)sender).Price = "Price: " + (int)FactoryCost;
+                FactoryAntal += 1;
             }
         }
 
@@ -293,18 +503,20 @@ namespace CookieClicker
                 Cookies -= (int)MineCost;
                 MinePerSec += 125;
                 MineCost *= NextPrice;
-                ((Button)sender).Price = "Price: " + MineCost;
+                ((Button)sender).Price = "Price: " + (int)MineCost;
+                MineAntal += 1;
             }
         }
 
-        private void FarmButton_click(object sender, System.EventArgs e)
+        private void FarmButton_click1(object sender, System.EventArgs e)
         {
             if (Cookies >= FarmCost)
             {
                 Cookies -= (int)FarmCost;
                 FarmPerSec += 40;
                 FarmCost *= NextPrice;
-                ((Button)sender).Price = "Price: " + FarmCost;
+                ((Button)sender).Price = "Price: " + (int)FarmCost;
+                FarmAntal += 1;
             }
         }
 
@@ -316,7 +528,8 @@ namespace CookieClicker
                 Cookies -= (int)GrandmaCost;
                 GrandmaPerSec += 5;
                 GrandmaCost = GrandmaCost *= NextPrice;
-                ((Button)sender).Price = "Price: " + GrandmaCost;
+                ((Button)sender).Price = "Price: " + (int)GrandmaCost;
+                GrandmaAntal += 1;
             }
         }
 
@@ -326,9 +539,9 @@ namespace CookieClicker
             {
                 Cookies -= (int)CursorCost;
                 CursorPerSec += 1;
-                
                 CursorCost *= NextPrice;
-                ((Button)sender).Price = "Price: " + CursorCost;
+                ((Button)sender).Price = "Price: " + (int)CursorCost;
+                CursorAntal += 1;
             }
         }
 
@@ -337,12 +550,12 @@ namespace CookieClicker
             secTimer += 1;
             if (secTimer == 60)
             {
-                Cookies += GrandmaPerSec;
-                Cookies += CursorPerSec;
-                Cookies += FarmPerSec;
-                Cookies += MinePerSec;
-                Cookies += FactoryPerSec;
-                Cookies += BankPerSec;
+                Cookies += CursorPerSec * CursorUpgrade;
+                Cookies += GrandmaPerSec * GrandmaUpgrade;
+                Cookies += FarmPerSec * FarmUpgrade;
+                Cookies += MinePerSec * MineUpgrade;
+                Cookies += FactoryPerSec * FactoryUpgrade;
+                Cookies += BankPerSec * BankUpgrade;
                 secTimer = 0;
             }
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -371,7 +584,7 @@ namespace CookieClicker
 
             base.Update(gameTime);
         }
-        
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
@@ -379,8 +592,10 @@ namespace CookieClicker
             _spriteBatch.Begin();
             _spriteBatch.Draw(BackgroundSprite, new Vector2(0, 0), Color.White);
             _spriteBatch.DrawString(gameFont, "Cookies:" + " " + Cookies.ToString(), new Vector2(50, 50), Color.White);
+            _spriteBatch.DrawString(gameFont, "Rebirth Cookies:" + " " + RebirthCookies.ToString(), new Vector2(50, 800), Color.White);
             _spriteBatch.Draw(CookieSprite, new Vector2(Cookieposition.X - CookieRadius, Cookieposition.Y - CookieRadius), Color.White); 
             _spriteBatch.Draw(StoreSprite, new Vector2(1110, 0), Color.White);
+            
 
             _spriteBatch.DrawString(gameFontSmall, " " + mouseClickerUpgradeCost, new Vector2(1130, 160), Color.White);
             _spriteBatch.DrawString(gameFontSmall, " " + cursorClickerUpgradeCost, new Vector2(1210, 160), Color.White);
@@ -388,17 +603,38 @@ namespace CookieClicker
             _spriteBatch.DrawString(gameFontSmall, " " + farmClickerUpgradeCost, new Vector2(1365, 160), Color.White);
             _spriteBatch.DrawString(gameFontSmall, " " + mineClickerUpgradeCost, new Vector2(1437, 160), Color.White);
             _spriteBatch.DrawString(gameFontSmall, " " + factoryClickerUpgradeCost, new Vector2(1515, 160), Color.White);
+            _spriteBatch.DrawString(gameFontSmall, " " + bankClickerUpgradeCost, new Vector2(1110, 260), Color.White);
+
+            _spriteBatch.DrawString(gameFontSmall, " " + mouseClickerUpgradeCost * 5, new Vector2(1207, 260), Color.White);
+            _spriteBatch.DrawString(gameFontSmall, " " + cursorClickerUpgradeCost * 5, new Vector2(1282, 260), Color.White);
+            _spriteBatch.DrawString(gameFontSmall, " " + grandmaClickerUpgradeCost * 5, new Vector2(1365, 260), Color.White);
+            _spriteBatch.DrawString(gameFontSmall, " " + farmClickerUpgradeCost * 5, new Vector2(1438, 260), Color.White);
+            _spriteBatch.DrawString(gameFontSmall, " " + mineClickerUpgradeCost * 5, new Vector2(1518, 260), Color.White);
+            _spriteBatch.DrawString(gameFontSmall, " " + factoryClickerUpgradeCost * 5, new Vector2(1110, 360), Color.White);
+            _spriteBatch.DrawString(gameFontSmall, " " + bankClickerUpgradeCost * 5, new Vector2(1190, 360), Color.White);
+
+            _spriteBatch.DrawString(gameFontSmall, "Doubles income from sources", new Vector2(1300, 320), Color.White);
+
+
             foreach (var component in _gameComponents)
                 component.Draw(gameTime, _spriteBatch);
 
             
             _spriteBatch.Draw(MouseClickerSprite, new Vector2(1105, 68), Color.White);
             _spriteBatch.Draw(CursorClickerSprite, new Vector2(1182, 68), Color.White);
-            _spriteBatch.Draw(GrandmaClickerSprite, new Vector2(1266, 49), Color.White);
+            _spriteBatch.Draw(GrandmaClickerSprite, new Vector2(1266, 50), Color.White);
             _spriteBatch.Draw(FarmClickerSprite, new Vector2(1343, 68), Color.White);
             _spriteBatch.Draw(MineClickerSprite, new Vector2(1422, 68), Color.White);
             _spriteBatch.Draw(FactoryClickerSprite, new Vector2(1502, 68), Color.White);
             _spriteBatch.Draw(BankClickerSprite, new Vector2(1103, 167), Color.White);
+
+            _spriteBatch.Draw(MouseClickerSprite, new Vector2(1185, 169), Color.White);
+            _spriteBatch.Draw(CursorClickerSprite, new Vector2(1262, 170), Color.White);
+            _spriteBatch.Draw(GrandmaClickerSprite, new Vector2(1347, 152), Color.White);
+            _spriteBatch.Draw(FarmClickerSprite, new Vector2(1422, 170), Color.White);
+            _spriteBatch.Draw(MineClickerSprite, new Vector2(1501, 168), Color.White);
+            _spriteBatch.Draw(FactoryClickerSprite, new Vector2(1102, 268), Color.White);
+            _spriteBatch.Draw(BankClickerSprite, new Vector2(1183, 267), Color.White);
 
             _spriteBatch.Draw(CursorClickerSprite, new Vector2(1100, 378), Color.White);
             _spriteBatch.Draw(GrandmaClickerSprite, new Vector2(1110, 444), Color.White);
@@ -406,6 +642,21 @@ namespace CookieClicker
             _spriteBatch.Draw(MineClickerSprite, new Vector2(1105, 632), Color.White);
             _spriteBatch.Draw(FactoryClickerSprite, new Vector2(1105, 718), Color.White);
             _spriteBatch.Draw(BankClickerSprite, new Vector2(1105, 802), Color.White);
+
+            _spriteBatch.DrawString(gameFontSmall, " " + CursorAntal.ToString(), new Vector2(1370, 418), Color.Black);
+            _spriteBatch.DrawString(gameFontSmall, " " + GrandmaAntal.ToString(), new Vector2(1370, 503), Color.Black);
+            _spriteBatch.DrawString(gameFontSmall, " " + FarmAntal.ToString(), new Vector2(1370, 588), Color.Black);
+            _spriteBatch.DrawString(gameFontSmall, " " + MineAntal.ToString(), new Vector2(1370, 673), Color.Black);
+            _spriteBatch.DrawString(gameFontSmall, " " + FactoryAntal.ToString(), new Vector2(1370, 758), Color.Black);
+            _spriteBatch.DrawString(gameFontSmall, " " + BankAntal.ToString(), new Vector2(1370, 843), Color.Black);
+
+            _spriteBatch.DrawString(gameFontSmall, "+ " + CursorCps.ToString() + "Cps", new Vector2(1260, 400), Color.Black);
+            _spriteBatch.DrawString(gameFontSmall, "+ " + GrandmaCps.ToString() + "Cps", new Vector2(1290, 485), Color.Black);
+            _spriteBatch.DrawString(gameFontSmall, "+ " + FarmCps.ToString() + "Cps", new Vector2(1230, 570), Color.Black);
+            _spriteBatch.DrawString(gameFontSmall, "+ " + MineCps.ToString() + "Cps", new Vector2(1230, 655), Color.Black);
+            _spriteBatch.DrawString(gameFontSmall, "+ " + FactoryCps.ToString() + "Cps", new Vector2(1250, 740), Color.Black);
+            _spriteBatch.DrawString(gameFontSmall, "+ " + BankCps.ToString() + "Cps", new Vector2(1240, 825), Color.Black);
+
             _spriteBatch.End();
             base.Draw(gameTime);
         }
