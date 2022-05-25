@@ -3,16 +3,21 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace CookieClicker
 {
+    public enum Page
+    {
+        Store, RebirthStore
+    }
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
         private List<MyComponent> _gameComponents;
+        private List<MyComponent> _gameComponents2;
+
 
         Texture2D MouseClickerSprite;
         Texture2D CursorClickerSprite;
@@ -36,7 +41,7 @@ namespace CookieClicker
         int Cookies = 10000;
         int RebirthCookies = 0;
 
-        int Click = 1;
+        int Click = 2;
 
         int secTimer = 0;
 
@@ -84,7 +89,7 @@ namespace CookieClicker
         int MineUpgrade = 1;
         int FactoryUpgrade = 1;
         int BankUpgrade = 1;
-
+        Page ActivePage = Page.Store;
 
         public Game1()
         {
@@ -147,7 +152,7 @@ namespace CookieClicker
             {
                 Position = new Vector2(1115, 730),
                 Text = "  Factory  ",
-                Price = "Price:" + FactoryCost,
+                Price = "Price:" + minifyLong((long)FactoryCost)
             };
 
             factoryButton.click += FactoryButton_click;
@@ -156,7 +161,7 @@ namespace CookieClicker
             {
                 Position = new Vector2(1115, 815),
                 Text = "  Bank      ",
-                Price = "Price:" + BankCost,
+                Price = "Price:" + minifyLong((long)BankCost)
             };
 
             bankButton.click += BankButton_click;
@@ -279,11 +284,16 @@ namespace CookieClicker
                 Text = "                                                                                     Page 1",
             };
 
+            Page1.click += Page1_click;
+
             var Page2 = new Button(this, Content.Load<Texture2D>("Controls/Button4"), Content.Load<SpriteFont>("Fonts/galleryFontSmall"))
             {
                 Position = new Vector2(900, 850),
                 Text = "                                                                                     Page 2",
             };
+
+            Page2.click += Page2_click;
+
 
             _gameComponents = new List<MyComponent>()
             {
@@ -314,6 +324,11 @@ namespace CookieClicker
                Page2,
             };
 
+            _gameComponents2 = new List<MyComponent>()
+            {
+                Page1,Page2
+            };
+
             StoreSprite = Content.Load<Texture2D>("Store");
             CookieSprite = Content.Load<Texture2D>("Cookie");
             BackgroundSprite = Content.Load<Texture2D>("Background");
@@ -330,7 +345,15 @@ namespace CookieClicker
 
         }
 
+        private void Page2_click(object sender, System.EventArgs e)
+        {
+            ActivePage = Page.RebirthStore;
+        }
 
+        private void Page1_click(object sender, System.EventArgs e)
+        {
+            ActivePage = Page.Store;
+        }
 
         private void BankclickerButton2_click(object sender, System.EventArgs e)
         {
@@ -464,11 +487,11 @@ namespace CookieClicker
 
         private void MouseclickerButton_click(object sender, System.EventArgs e)
         {
+            
             if (Cookies >= mouseClickerUpgradeCost)
             {
                 Click *= 2;
                 Cookies -= mouseClickerUpgradeCost;
-                
             }
         }
 
@@ -585,80 +608,115 @@ namespace CookieClicker
             base.Update(gameTime);
         }
 
+     
         protected override void Draw(GameTime gameTime)
         {
+
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
             _spriteBatch.Draw(BackgroundSprite, new Vector2(0, 0), Color.White);
-            _spriteBatch.DrawString(gameFont, "Cookies:" + " " + Cookies.ToString(), new Vector2(50, 50), Color.White);
-            _spriteBatch.DrawString(gameFont, "Rebirth Cookies:" + " " + RebirthCookies.ToString(), new Vector2(50, 800), Color.White);
-            _spriteBatch.Draw(CookieSprite, new Vector2(Cookieposition.X - CookieRadius, Cookieposition.Y - CookieRadius), Color.White); 
-            _spriteBatch.Draw(StoreSprite, new Vector2(1110, 0), Color.White);
+            _spriteBatch.DrawString(gameFont, "Cookies:" + " " + minifyLong(Cookies), new Vector2(50, 50), Color.White);
+            _spriteBatch.DrawString(gameFont, "Rebirth Cookies:" + " " + minifyLong(RebirthCookies), new Vector2(50, 800), Color.White);
+            _spriteBatch.Draw(CookieSprite, new Vector2(Cookieposition.X - CookieRadius, Cookieposition.Y - CookieRadius), Color.White);
+     
+
+            if (ActivePage == Page.Store)
+            {
+                _spriteBatch.Draw(StoreSprite, new Vector2(1110, 0), Color.White);
+
+
+                _spriteBatch.DrawString(gameFontSmall, minifyLong(mouseClickerUpgradeCost), new Vector2(1130, 160), Color.White);
+                _spriteBatch.DrawString(gameFontSmall, minifyLong(cursorClickerUpgradeCost), new Vector2(1210, 160), Color.White);
+                _spriteBatch.DrawString(gameFontSmall, minifyLong(grandmaClickerUpgradeCost), new Vector2(1282, 160), Color.White);
+                _spriteBatch.DrawString(gameFontSmall, minifyLong(farmClickerUpgradeCost), new Vector2(1365, 160), Color.White);
+                _spriteBatch.DrawString(gameFontSmall, minifyLong(mineClickerUpgradeCost), new Vector2(1437, 160), Color.White);
+                _spriteBatch.DrawString(gameFontSmall, minifyLong(factoryClickerUpgradeCost), new Vector2(1515, 160), Color.White);
+                _spriteBatch.DrawString(gameFontSmall, minifyLong(bankClickerUpgradeCost), new Vector2(1110, 260), Color.White);
+
+                _spriteBatch.DrawString(gameFontSmall, minifyLong(mouseClickerUpgradeCost * 5), new Vector2(1207, 260), Color.White);
+                _spriteBatch.DrawString(gameFontSmall, minifyLong(cursorClickerUpgradeCost * 5), new Vector2(1282, 260), Color.White);
+                _spriteBatch.DrawString(gameFontSmall, minifyLong(grandmaClickerUpgradeCost * 5), new Vector2(1365, 260), Color.White);
+                _spriteBatch.DrawString(gameFontSmall, minifyLong(farmClickerUpgradeCost * 5), new Vector2(1438, 260), Color.White);
+                _spriteBatch.DrawString(gameFontSmall, minifyLong(mineClickerUpgradeCost * 5), new Vector2(1518, 260), Color.White);
+                _spriteBatch.DrawString(gameFontSmall, minifyLong(factoryClickerUpgradeCost * 5), new Vector2(1110, 360), Color.White);
+                _spriteBatch.DrawString(gameFontSmall, minifyLong(bankClickerUpgradeCost * 5), new Vector2(1190, 360), Color.White);
+
+                _spriteBatch.DrawString(gameFontSmall, "Doubles income from sources", new Vector2(1300, 320), Color.White);
+
+
+                foreach (var component in _gameComponents)
+                    component.Draw(gameTime, _spriteBatch);
+
+
+                _spriteBatch.Draw(MouseClickerSprite, new Vector2(1105, 68), Color.White);
+                _spriteBatch.Draw(CursorClickerSprite, new Vector2(1182, 68), Color.White);
+                _spriteBatch.Draw(GrandmaClickerSprite, new Vector2(1266, 50), Color.White);
+                _spriteBatch.Draw(FarmClickerSprite, new Vector2(1343, 68), Color.White);
+                _spriteBatch.Draw(MineClickerSprite, new Vector2(1422, 68), Color.White);
+                _spriteBatch.Draw(FactoryClickerSprite, new Vector2(1502, 68), Color.White);
+                _spriteBatch.Draw(BankClickerSprite, new Vector2(1103, 167), Color.White);
+
+                _spriteBatch.Draw(MouseClickerSprite, new Vector2(1185, 169), Color.White);
+                _spriteBatch.Draw(CursorClickerSprite, new Vector2(1262, 170), Color.White);
+                _spriteBatch.Draw(GrandmaClickerSprite, new Vector2(1347, 152), Color.White);
+                _spriteBatch.Draw(FarmClickerSprite, new Vector2(1422, 170), Color.White);
+                _spriteBatch.Draw(MineClickerSprite, new Vector2(1501, 168), Color.White);
+                _spriteBatch.Draw(FactoryClickerSprite, new Vector2(1102, 268), Color.White);
+                _spriteBatch.Draw(BankClickerSprite, new Vector2(1183, 267), Color.White);
+
+                _spriteBatch.Draw(CursorClickerSprite, new Vector2(1100, 378), Color.White);
+                _spriteBatch.Draw(GrandmaClickerSprite, new Vector2(1110, 444), Color.White);
+                _spriteBatch.Draw(FarmClickerSprite, new Vector2(1105, 550), Color.White);
+                _spriteBatch.Draw(MineClickerSprite, new Vector2(1105, 632), Color.White);
+                _spriteBatch.Draw(FactoryClickerSprite, new Vector2(1105, 718), Color.White);
+                _spriteBatch.Draw(BankClickerSprite, new Vector2(1105, 802), Color.White);
+
+                _spriteBatch.DrawString(gameFontSmall, " " + CursorAntal.ToString(), new Vector2(1370, 418), Color.Black);
+                _spriteBatch.DrawString(gameFontSmall, " " + GrandmaAntal.ToString(), new Vector2(1370, 503), Color.Black);
+                _spriteBatch.DrawString(gameFontSmall, " " + FarmAntal.ToString(), new Vector2(1370, 588), Color.Black);
+                _spriteBatch.DrawString(gameFontSmall, " " + MineAntal.ToString(), new Vector2(1370, 673), Color.Black);
+                _spriteBatch.DrawString(gameFontSmall, " " + FactoryAntal.ToString(), new Vector2(1370, 758), Color.Black);
+                _spriteBatch.DrawString(gameFontSmall, " " + BankAntal.ToString(), new Vector2(1370, 843), Color.Black);
+
+                _spriteBatch.DrawString(gameFontSmall, "+ " + minifyLong(CursorCps) + " Cps", new Vector2(1260, 400), Color.Black);
+                _spriteBatch.DrawString(gameFontSmall, "+ " + minifyLong(GrandmaCps) + " Cps", new Vector2(1290, 485), Color.Black);
+                _spriteBatch.DrawString(gameFontSmall, "+ " + minifyLong(FarmCps) + " Cps", new Vector2(1230, 570), Color.Black);
+                _spriteBatch.DrawString(gameFontSmall, "+ " + minifyLong(MineCps) + " Cps", new Vector2(1230, 655), Color.Black);
+                _spriteBatch.DrawString(gameFontSmall, "+ " + minifyLong(FactoryCps) + " Cps", new Vector2(1250, 740), Color.Black);
+                _spriteBatch.DrawString(gameFontSmall, "+ " + minifyLong(BankCps) + " Cps", new Vector2(1240, 825), Color.Black);
+            }
+            else if(ActivePage==Page.RebirthStore)
+            {
+                _spriteBatch.Draw(StoreSprite, new Vector2(1110, 0), Color.White);
+                foreach (var component in _gameComponents2)
+                    component.Draw(gameTime, _spriteBatch);
+            }
             
-
-            _spriteBatch.DrawString(gameFontSmall, " " + mouseClickerUpgradeCost, new Vector2(1130, 160), Color.White);
-            _spriteBatch.DrawString(gameFontSmall, " " + cursorClickerUpgradeCost, new Vector2(1210, 160), Color.White);
-            _spriteBatch.DrawString(gameFontSmall, " " + grandmaClickerUpgradeCost, new Vector2(1282, 160), Color.White);
-            _spriteBatch.DrawString(gameFontSmall, " " + farmClickerUpgradeCost, new Vector2(1365, 160), Color.White);
-            _spriteBatch.DrawString(gameFontSmall, " " + mineClickerUpgradeCost, new Vector2(1437, 160), Color.White);
-            _spriteBatch.DrawString(gameFontSmall, " " + factoryClickerUpgradeCost, new Vector2(1515, 160), Color.White);
-            _spriteBatch.DrawString(gameFontSmall, " " + bankClickerUpgradeCost, new Vector2(1110, 260), Color.White);
-
-            _spriteBatch.DrawString(gameFontSmall, " " + mouseClickerUpgradeCost * 5, new Vector2(1207, 260), Color.White);
-            _spriteBatch.DrawString(gameFontSmall, " " + cursorClickerUpgradeCost * 5, new Vector2(1282, 260), Color.White);
-            _spriteBatch.DrawString(gameFontSmall, " " + grandmaClickerUpgradeCost * 5, new Vector2(1365, 260), Color.White);
-            _spriteBatch.DrawString(gameFontSmall, " " + farmClickerUpgradeCost * 5, new Vector2(1438, 260), Color.White);
-            _spriteBatch.DrawString(gameFontSmall, " " + mineClickerUpgradeCost * 5, new Vector2(1518, 260), Color.White);
-            _spriteBatch.DrawString(gameFontSmall, " " + factoryClickerUpgradeCost * 5, new Vector2(1110, 360), Color.White);
-            _spriteBatch.DrawString(gameFontSmall, " " + bankClickerUpgradeCost * 5, new Vector2(1190, 360), Color.White);
-
-            _spriteBatch.DrawString(gameFontSmall, "Doubles income from sources", new Vector2(1300, 320), Color.White);
-
-
-            foreach (var component in _gameComponents)
-                component.Draw(gameTime, _spriteBatch);
-
-            
-            _spriteBatch.Draw(MouseClickerSprite, new Vector2(1105, 68), Color.White);
-            _spriteBatch.Draw(CursorClickerSprite, new Vector2(1182, 68), Color.White);
-            _spriteBatch.Draw(GrandmaClickerSprite, new Vector2(1266, 50), Color.White);
-            _spriteBatch.Draw(FarmClickerSprite, new Vector2(1343, 68), Color.White);
-            _spriteBatch.Draw(MineClickerSprite, new Vector2(1422, 68), Color.White);
-            _spriteBatch.Draw(FactoryClickerSprite, new Vector2(1502, 68), Color.White);
-            _spriteBatch.Draw(BankClickerSprite, new Vector2(1103, 167), Color.White);
-
-            _spriteBatch.Draw(MouseClickerSprite, new Vector2(1185, 169), Color.White);
-            _spriteBatch.Draw(CursorClickerSprite, new Vector2(1262, 170), Color.White);
-            _spriteBatch.Draw(GrandmaClickerSprite, new Vector2(1347, 152), Color.White);
-            _spriteBatch.Draw(FarmClickerSprite, new Vector2(1422, 170), Color.White);
-            _spriteBatch.Draw(MineClickerSprite, new Vector2(1501, 168), Color.White);
-            _spriteBatch.Draw(FactoryClickerSprite, new Vector2(1102, 268), Color.White);
-            _spriteBatch.Draw(BankClickerSprite, new Vector2(1183, 267), Color.White);
-
-            _spriteBatch.Draw(CursorClickerSprite, new Vector2(1100, 378), Color.White);
-            _spriteBatch.Draw(GrandmaClickerSprite, new Vector2(1110, 444), Color.White);
-            _spriteBatch.Draw(FarmClickerSprite, new Vector2(1105, 550), Color.White);
-            _spriteBatch.Draw(MineClickerSprite, new Vector2(1105, 632), Color.White);
-            _spriteBatch.Draw(FactoryClickerSprite, new Vector2(1105, 718), Color.White);
-            _spriteBatch.Draw(BankClickerSprite, new Vector2(1105, 802), Color.White);
-
-            _spriteBatch.DrawString(gameFontSmall, " " + CursorAntal.ToString(), new Vector2(1370, 418), Color.Black);
-            _spriteBatch.DrawString(gameFontSmall, " " + GrandmaAntal.ToString(), new Vector2(1370, 503), Color.Black);
-            _spriteBatch.DrawString(gameFontSmall, " " + FarmAntal.ToString(), new Vector2(1370, 588), Color.Black);
-            _spriteBatch.DrawString(gameFontSmall, " " + MineAntal.ToString(), new Vector2(1370, 673), Color.Black);
-            _spriteBatch.DrawString(gameFontSmall, " " + FactoryAntal.ToString(), new Vector2(1370, 758), Color.Black);
-            _spriteBatch.DrawString(gameFontSmall, " " + BankAntal.ToString(), new Vector2(1370, 843), Color.Black);
-
-            _spriteBatch.DrawString(gameFontSmall, "+ " + CursorCps.ToString() + "Cps", new Vector2(1260, 400), Color.Black);
-            _spriteBatch.DrawString(gameFontSmall, "+ " + GrandmaCps.ToString() + "Cps", new Vector2(1290, 485), Color.Black);
-            _spriteBatch.DrawString(gameFontSmall, "+ " + FarmCps.ToString() + "Cps", new Vector2(1230, 570), Color.Black);
-            _spriteBatch.DrawString(gameFontSmall, "+ " + MineCps.ToString() + "Cps", new Vector2(1230, 655), Color.Black);
-            _spriteBatch.DrawString(gameFontSmall, "+ " + FactoryCps.ToString() + "Cps", new Vector2(1250, 740), Color.Black);
-            _spriteBatch.DrawString(gameFontSmall, "+ " + BankCps.ToString() + "Cps", new Vector2(1240, 825), Color.Black);
 
             _spriteBatch.End();
             base.Draw(gameTime);
         }
+        public string minifyLong(long value)
+        {
+            if (value >= 100000000000)
+                return (value / 1000000000).ToString() + "B";
+            else if (value >= 10000000000)
+                return (value / 1000000000).ToString() + "B";
+            else if (value >= 100000000)
+                return (value / 1000000).ToString() + "M";
+            else if (value >= 10000000)
+                return (value / 100000).ToString() + "M";
+            else if (value >= 100000)
+                return (value / 1000).ToString() + "K";
+            else if (value >= 10000)
+                return (value / 1000).ToString() + "K";
+            string t = value.ToString();
+            return t;
+        }
+        //public string minifyLong(long value)
+        //{
+        //    return value + "";
+        //}
     }
 }
