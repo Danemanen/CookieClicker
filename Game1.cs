@@ -39,8 +39,8 @@ namespace CookieClicker
         MouseState mState;
         bool mReleased = true;
 
-        int Cookies = 3000000;
-        int RebirthCookies = 10000;
+        int Cookies = 0;
+        int RebirthCookies = 0;
 
         int Booster = 1;
         int ClickUpgrade = 1;
@@ -483,6 +483,15 @@ namespace CookieClicker
 
             Page2.click += Page2_click;
 
+            var RestartButton = new Button(this, Content.Load<Texture2D>("Controls/Button4"), Content.Load<SpriteFont>("Fonts/galleryFontSmall"))
+            {
+                Position = new Vector2(500, 800),
+                Text = "                                                                                     Restart"
+
+            };
+
+            RestartButton.click += RestartButton_click;
+
 
             _gameComponents = new List<MyComponent>()
             {
@@ -511,6 +520,8 @@ namespace CookieClicker
 
                Page1,
                Page2,
+
+               RestartButton,
             };
 
             _gameComponents2 = new List<MyComponent>()
@@ -535,6 +546,8 @@ namespace CookieClicker
 
                Page1,
                Page2,
+
+               RestartButton,
             };
 
             StoreSprite = Content.Load<Texture2D>("Store");
@@ -549,6 +562,115 @@ namespace CookieClicker
             BankClickerSprite = Content.Load<Texture2D>("bankclicker");
             gameFont = Content.Load<SpriteFont>("Fonts/galleryFont");
             gameFontSmall = Content.Load<SpriteFont>("Fonts/galleryFontSmall");
+
+
+        }
+
+        private void RestartButton_click(object sender, System.EventArgs e)
+        {
+
+                Cookies = 0;
+                RebirthCookies = 0;
+
+                Booster = 1;
+                ClickUpgrade = 1;
+                Click = 2;
+                RebirthClick = 1;
+                CpsClick = 0;
+
+                CursorPerSec = 0;
+                GrandmaPerSec = 0;
+                FarmPerSec = 0;
+                MinePerSec = 0;
+                FactoryPerSec = 0;
+                BankPerSec = 0;
+
+                CursorCost = 100;
+                GrandmaCost = 250;
+                FarmCost = 1250;
+                MineCost = 10000;
+                FactoryCost = 100000;
+                BankCost = 850000;
+
+                CursorAntal = 0;
+                GrandmaAntal = 0;
+                FarmAntal = 0;
+                MineAntal = 0;
+                FactoryAntal = 0;
+                BankAntal = 0;
+
+                CursorCps = 1;
+                GrandmaCps = 5;
+                FarmCps = 40;
+                MineCps = 125;
+                FactoryCps = 1000;
+                BankCps = 12000;
+
+                mouseClickerUpgradeCost = 500;
+                cursorClickerUpgradeCost = 750;
+                grandmaClickerUpgradeCost = 1500;
+                farmClickerUpgradeCost = 5000;
+                mineClickerUpgradeCost = 15000;
+                factoryClickerUpgradeCost = 200000;
+                bankClickerUpgradeCost = 1500000;
+
+                mouseClickerUpgradeCost2 = 2500;
+                cursorClickerUpgradeCost2 = 3750;
+                grandmaClickerUpgradeCost2 = 7500;
+                farmClickerUpgradeCost2 = 25000;
+                mineClickerUpgradeCost2 = 75000;
+                factoryClickerUpgradeCost2 = 1000000;
+                bankClickerUpgradeCost2 = 7500000;
+
+                CursorUpgrade = 1;
+                GrandmaUpgrade = 1;
+                FarmUpgrade = 1;
+                MineUpgrade = 1;
+                FactoryUpgrade = 1;
+                BankUpgrade = 1;
+
+                 RebirthCursorAntal = 0;
+                 RebirthGrandmaAntal = 0;
+                 RebirthFarmAntal = 0;
+                 RebirthMineAntal = 0;
+                 RebirthFactoryAntal = 0;
+                 RebirthBankAntal = 0;
+
+                 RebirthCursorCps = 1;
+                 RebirthGrandmaCps = 5;
+                 RebirthFarmCps = 40;
+                 RebirthMineCps = 125;
+                 RebirthFactoryCps = 1000;
+                 RebirthBankCps = 12000;
+
+                 RebirthmouseClickerUpgradeCost = 500;
+                 RebirthcursorClickerUpgradeCost = 750;
+                 RebirthgrandmaClickerUpgradeCost = 1500;
+                 RebirthfarmClickerUpgradeCost = 5000;
+                 RebirthmineClickerUpgradeCost = 15000;
+                 RebirthfactoryClickerUpgradeCost = 200000;
+                 RebirthbankClickerUpgradeCost = 1500000;
+
+                 RebirthCursorPerSec = 0;
+                 RebirthGrandmaPerSec = 0;
+                 RebirthFarmPerSec = 0;
+                 RebirthMinePerSec = 0;
+                 RebirthFactoryPerSec = 0;
+                 RebirthBankPerSec = 0;
+
+                 RebirthCursorCost = 100;
+                 RebirthGrandmaCost = 250;
+                 RebirthFarmCost = 1250;
+                 RebirthMineCost = 10000;
+                 RebirthFactoryCost = 100000;
+                 RebirthBankCost = 850000;
+
+                 RebirthCursorUpgrade = 1;
+                 RebirthGrandmaUpgrade = 1;
+                 RebirthFarmUpgrade = 1;
+                 RebirthMineUpgrade = 1;
+                 RebirthFactoryUpgrade = 1;
+                 RebirthBankUpgrade = 1;
 
 
         }
@@ -763,7 +885,7 @@ namespace CookieClicker
                     RebirthMinePerSec += 40;
                     RebirthMineCost *= NextPrice;
                     ((Button)sender).Price = "Price: " + (int)RebirthMineCost;
-                    RebirthFarmAntal += 1;
+                    RebirthMineAntal += 1;
                 }
             }
         }
@@ -1203,7 +1325,7 @@ namespace CookieClicker
             else if (value >= 100000000)
                 return (value / 1000000).ToString() + "M";
             else if (value >= 10000000)
-                return (value / 100000).ToString() + "M";
+                return (value / 1000000).ToString() + "M";
             else if (value >= 100000)
                 return (value / 1000).ToString() + "K";
             else if (value >= 10000)
