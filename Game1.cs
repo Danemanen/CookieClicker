@@ -485,7 +485,7 @@ namespace CookieClicker
 
             var RestartButton = new Button(this, Content.Load<Texture2D>("Controls/Button4"), Content.Load<SpriteFont>("Fonts/galleryFontSmall"))
             {
-                Position = new Vector2(500, 800),
+                Position = new Vector2(0, 850),
                 Text = "                                                                                     Restart"
 
             };
